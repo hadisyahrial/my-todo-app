@@ -14,6 +14,19 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
+// Deteksi token expired dan otomatis logout
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('username');
+      window.location.href = '/';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const getTodos = () => API.get('/todos');
 export const createTodo = (title) => API.post('/todos', { title });
 export const updateTodo = (id, data) => API.put(`/todos/${id}`, data);
