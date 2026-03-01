@@ -3,29 +3,46 @@ import React, { useState, useEffect } from 'react';
 import { getTodos, createTodo, updateTodo, deleteTodo } from './services/api';
 import TodoInput from './components/TodoInput';
 import TodoList from './components/TodoList';
+import Login from './components/Login';
+import Register from './components/Register';
 import './App.css';
 
 function App() {
   const [todos, setTodos] = useState([]);
-  const [filter, setFilter] = useState('semua'); 
-const filteredTodos = todos.filter(todo => {
-  if (filter === 'aktif') return !todo.completed;
-  if (filter === 'selesai') return todo.completed;
-  return true;
-});
+  const [filter, setFilter] = useState('semua');
+  const [username, setUsername] = useState(localStorage.getItem('username'));
+  const [page, setPage] = useState('login');
 
   useEffect(() => {
-    fetchTodos();
-  }, []);
+    if (username) fetchTodos();
+  }, [username]);
 
   const fetchTodos = async () => {
     try {
       const res = await getTodos();
       setTodos(res.data);
     } catch (err) {
-      console.error('Detail error:', err.response || err.message || err);
+      console.error('Error:', err.message);
     }
   };
+
+  const handleLogin = (username) => {
+    setUsername(username);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    setUsername(null);
+    setTodos([]);
+    setPage('login');
+  };
+
+  const filteredTodos = todos.filter(todo => {
+    if (filter === 'aktif') return !todo.completed;
+    if (filter === 'selesai') return todo.completed;
+    return true;
+  });
 
   const handleAdd = async (title) => {
     const res = await createTodo(title);
@@ -47,9 +64,21 @@ const filteredTodos = todos.filter(todo => {
     setTodos(todos.map(todo => todo._id === id ? res.data : todo));
   };
 
- return (
+  if (!username) {
+    return page === 'login'
+      ? <Login onLogin={handleLogin} switchToRegister={() => setPage('register')} />
+      : <Register onRegister={handleLogin} switchToLogin={() => setPage('login')} />;
+  }
+
+  return (
     <div className="app">
-      <h1>My Todo App</h1>
+      <div className="header">
+        <h1>My Todo App</h1>
+        <div className="user-info">
+          <span>Halo, {username}!</span>
+          <button className="logout-btn" onClick={handleLogout}>Logout</button>
+        </div>
+      </div>
       <TodoInput onAdd={handleAdd} />
       <div className="filter-buttons">
         <button onClick={() => setFilter('semua')}>Semua</button>

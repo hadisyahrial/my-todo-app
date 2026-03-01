@@ -121,3 +121,110 @@ li button:hover {
   background-color: #4a90e2;
   color: white;
 }
+
+.auth-container {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  margin: 80px auto;
+}
+
+.auth-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 24px;
+}
+
+.auth-container input {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.auth-container input:focus {
+  border-color: #4a90e2;
+}
+
+.auth-container button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.auth-container button:hover {
+  background-color: #357abd;
+}
+
+.auth-container p {
+  text-align: center;
+  margin-top: 16px;
+  color: #666;
+}
+
+.link {
+  color: #4a90e2;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.error {
+  color: #e74c3c;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-info span {
+  color: #555;
+  font-size: 14px;
+}
+
+.logout-btn {
+  background-color: #e74c3c !important;
+  padding: 8px 16px !important;
+  font-size: 13px !important;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b !important;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+}
